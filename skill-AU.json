@@ -1,0 +1,509 @@
+{
+  "intents": [
+    {
+      "intent": "Enquiry",
+      "examples": [
+        {
+          "text": "Can I have campus tour"
+        },
+        {
+          "text": "Can I have contact details"
+        },
+        {
+          "text": "Can I have list of courses available"
+        },
+        {
+          "text": "Contact details"
+        },
+        {
+          "text": "Courses"
+        },
+        {
+          "text": "How to apply for the admission"
+        },
+        {
+          "text": "May I know about the University"
+        },
+        {
+          "text": "What are the courses available"
+        },
+        {
+          "text": "What is the admission process"
+        }
+      ],
+      "description": ""
+    },
+    {
+      "intent": "Greetings",
+      "examples": [
+        {
+          "text": "Hello"
+        },
+        {
+          "text": "Hi"
+        }
+      ],
+      "description": ""
+    }
+  ],
+  "entities": [
+    {
+      "entity": "Enquiry",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "About",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Admission",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "campus",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Contact",
+          "synonyms": []
+        },
+        {
+          "type": "synonyms",
+          "value": "Courses",
+          "synonyms": []
+        }
+      ],
+      "fuzzy_match": true
+    },
+    {
+      "entity": "Greetings",
+      "values": [
+        {
+          "type": "synonyms",
+          "value": "Hi",
+          "synonyms": [
+            "Hai",
+            "Hello",
+            "Hi"
+          ]
+        }
+      ],
+      "fuzzy_match": true
+    }
+  ],
+  "metadata": {
+    "api_version": {
+      "major_version": "v2",
+      "minor_version": "2018-11-08"
+    }
+  },
+  "dialog_nodes": [
+    {
+      "type": "standard",
+      "title": "Anything else",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "I didn't understand. You can try rephrasing."
+              },
+              {
+                "text": "Can you reword your statement? I'm not understanding."
+              },
+              {
+                "text": "I didn't get your meaning."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "anything_else",
+      "dialog_node": "Anything else",
+      "previous_sibling": "node_5_1601715096436",
+      "disambiguation_opt_out": true
+    },
+    {
+      "type": "standard",
+      "title": "Greetings",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, My name is Anurag Bot. How are you doing? You can ask a question or choose one of the options below"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "",
+            "options": [
+              {
+                "label": "About",
+                "value": {
+                  "input": {
+                    "text": "About"
+                  }
+                }
+              },
+              {
+                "label": "Courses",
+                "value": {
+                  "input": {
+                    "text": "Courses"
+                  }
+                }
+              },
+              {
+                "label": "Apply for Admission",
+                "value": {
+                  "input": {
+                    "text": "Apply for Admission"
+                  }
+                }
+              },
+              {
+                "label": "Contact",
+                "value": {
+                  "input": {
+                    "text": "Contact"
+                  }
+                }
+              },
+              {
+                "label": "Book a Campus Tour",
+                "value": {
+                  "input": {
+                    "text": "Book a Campus Tour"
+                  }
+                }
+              }
+            ],
+            "description": "",
+            "response_type": "option"
+          },
+          {
+            "values": [
+              {
+                "text": "Kindly choose one of the following to proceed"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "metadata": {
+        "_customization": {
+          "mcr": false
+        }
+      },
+      "conditions": "#Greetings || @Greetings:Hi",
+      "dialog_node": "node_5_1601715096436",
+      "previous_sibling": "Welcome"
+    },
+    {
+      "type": "standard",
+      "title": "Courses",
+      "output": {
+        "generic": [
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1601715762228",
+      "next_step": {
+        "behavior": "jump_to",
+        "selector": "condition",
+        "dialog_node": "node_9_1601715762228"
+      },
+      "conditions": "#Enquiry || @Enquiry:Courses",
+      "dialog_node": "node_6_1601720359289"
+    },
+    {
+      "type": "standard",
+      "title": "Enquiry",
+      "parent": "node_5_1601715096436",
+      "metadata": {
+        "_customization": {
+          "mcr": true
+        }
+      },
+      "conditions": "#Enquiry || @Enquiry:About",
+      "dialog_node": "node_9_1601715762228"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, My name is Anurag Bot. How are you doing? You can ask a question or choose one of the options below"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_5_1601715096436",
+      "disabled": true,
+      "dialog_node": "response_10_1601715342378",
+      "previous_sibling": "node_9_1601715762228"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "You can reach through \nVenkatapur, Ghatkesar, Medchal–Malkajgiri district, Hyderabad, Telangana, India. 500 088.\nPhone Number:  +91-98663 08205 / 92472 89944.\nemail:  info@anurag.edu.in "
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "multiline"
+          }
+        ]
+      },
+      "parent": "node_9_1601715762228",
+      "conditions": "@Enquiry:Contact",
+      "dialog_node": "response_10_1601718195950",
+      "previous_sibling": "response_7_1601718059091"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "For which course would you like to apply?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1601715762228",
+      "conditions": "@Enquiry:Admission",
+      "dialog_node": "response_1_1601718274385",
+      "previous_sibling": "response_10_1601718195950"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Currently, book a campus tour facility is not available due to Covid - 19 situation"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1601715762228",
+      "conditions": "@Enquiry:campus",
+      "dialog_node": "response_3_1601718302149",
+      "previous_sibling": "response_1_1601718274385"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Anurag University is a private university located in Hyderabad, Telangana. Our primary focus is to provide a high-quality graduate, postgraduate and doctoral education in engineering, pharmacy and management fields.\n\nAnurag offers 13 Undergraduate, 13 Graduate and 9 Doctoral programs."
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "",
+            "options": [
+              {
+                "label": "Courses",
+                "value": {
+                  "input": {
+                    "text": "Courses"
+                  }
+                }
+              },
+              {
+                "label": "Affiliation",
+                "value": {
+                  "input": {
+                    "text": "Affiliation"
+                  }
+                }
+              },
+              {
+                "label": "Facilities",
+                "value": {
+                  "input": {
+                    "text": "Facilities"
+                  }
+                }
+              },
+              {
+                "label": "Contact",
+                "value": {
+                  "input": {
+                    "text": "Contact"
+                  }
+                }
+              },
+              {
+                "label": "Placements",
+                "value": {
+                  "input": {
+                    "text": "Placements"
+                  }
+                }
+              },
+              {
+                "label": "Accommodation",
+                "value": {
+                  "input": {
+                    "text": "Accommodation"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          },
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "parent": "node_9_1601715762228",
+      "conditions": "@Enquiry:About",
+      "dialog_node": "response_6_1601718021128",
+      "previous_sibling": "node_6_1601720359289"
+    },
+    {
+      "type": "response_condition",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Kindly choose one of the following program to proceed further"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "title": "",
+            "options": [
+              {
+                "label": "UG",
+                "value": {
+                  "input": {
+                    "text": "UG"
+                  }
+                }
+              },
+              {
+                "label": "PG",
+                "value": {
+                  "input": {
+                    "text": "PG"
+                  }
+                }
+              },
+              {
+                "label": "PhD",
+                "value": {
+                  "input": {
+                    "text": "PhD"
+                  }
+                }
+              }
+            ],
+            "response_type": "option"
+          }
+        ]
+      },
+      "parent": "node_9_1601715762228",
+      "conditions": "@Enquiry:Courses",
+      "dialog_node": "response_7_1601718059091",
+      "previous_sibling": "response_6_1601718021128"
+    },
+    {
+      "type": "standard",
+      "title": "Welcome",
+      "output": {
+        "generic": [
+          {
+            "values": [
+              {
+                "text": "Hi, I am  Anurag Bot, How can I assist you Today?"
+              }
+            ],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          },
+          {
+            "values": [],
+            "response_type": "text",
+            "selection_policy": "sequential"
+          }
+        ]
+      },
+      "conditions": "welcome",
+      "dialog_node": "Welcome"
+    }
+  ],
+  "counterexamples": [],
+  "system_settings": {
+    "off_topic": {
+      "enabled": true
+    },
+    "disambiguation": {
+      "prompt": "Did you mean:",
+      "enabled": true,
+      "randomize": true,
+      "max_suggestions": 5,
+      "suggestion_text_policy": "title",
+      "none_of_the_above_prompt": "None of the above"
+    },
+    "system_entities": {
+      "enabled": true
+    },
+    "human_agent_assist": {
+      "prompt": "Did you mean:"
+    },
+    "spelling_auto_correct": true
+  },
+  "learning_opt_out": false,
+  "name": "AU",
+  "language": "en",
+  "description": ""
+}
